@@ -1,24 +1,12 @@
-# menu.py
-from incluir import incluir
-from alterar import alterar
+print("=== MENU PRINCIPAL ===")
+print("1 - Incluir nome")
+print("2 - Alterar nome")
 
-def menu():
-    while True:
-        print("\n=== MENU PRINCIPAL ===")
-        print("1 - Incluir nome")
-        print("2 - Alterar nome")
-        print("0 - Sair")
+opcao = input("Escolha uma opção: ")
 
-        opcao = input("Escolha uma opção: ")
-
-        if opcao == "1":
-            incluir()
-        elif opcao == "2":
-            alterar()
-        elif opcao == "0":
-            print("Saindo do sistema...")
-            break
-        else:
-            print("Opção inválida. Tente novamente.")
-
-menu()
+if opcao == "1":
+    import incluir
+elif opcao == "2":
+    import alterar
+else:
+    print("Opção inválida.")
