@@ -1,0 +1,13 @@
+Olá alunos! 
+
+Vocês podem ver que nesta terceira aula temos três arquivos: menu, incluir e alterar. Este pequeno app escrito em python grava nome em um arquivo TXT.
+
+A proposta: 
+
+1. Analisar o código (ver o que ele faz linha a linha). 
+2. Construir conexao.py. Este arquivo vai separar a lógica de persistência de dados em TXT que está em incluir e alterar.
+3. Resultado final: quatro arquivos: menu.py (fica inalterado), conexao.py (com a lógica de persistência de dados), incluir.py (que chama conexao e passa o nome) e alterar (que chama conexao e passa nome-novo e nome-antigo)
+4. Para quem programa em Java pode fazer o mesmo exercício, entendendo a lógica inicialmente e escrevendo nesta linguagem. 
+5. Coloque seu app com os quatro arquivos no seu github (você pode criar seu github com a conta google).
+
+Na próxima semana vamos ver isso funcionando com Banco de Dados MySQL. Abraços! 
