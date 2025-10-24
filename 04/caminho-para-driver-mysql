@@ -1,0 +1,13 @@
+Para PYTHON
+pip install mysql-connector-python 
+
+Para Java
+https://dev.mysql.com/downloads/connector/j/
+
+ou (Com MAVEN - https://mvnrepository.com/)
+
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-j</artifactId>
+    <version>9.0.0</version>
+</dependency>
