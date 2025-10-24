@@ -1,0 +1,2 @@
+Para o banco de dados, considere nome = nome, senha="" e local = localhost;
+Tabela nomes com os valores id com autoincrement e nome como atributo.
