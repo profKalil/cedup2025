@@ -1,0 +1,16 @@
+Olá alunos "javeiros". 
+
+O desafio é transformar o código que temos em modo console para um app com interface gráfica com javax.swing.*.
+Vamos escrever linha a linha nesta semana. Para tanto, algumas orientações: 
+
+Main é a classe principal com a Interface Gráfica (View)
+Atributos da classe: 
+ - txtNome para o nome da pessoa que vai reservar a chave;
+ - txtSala para o nome ou número da sala que será reservada;
+ - btnInserir para o botão reservar a sala e btnAlterar para alterar a reserva;
+ - use lblNome e lblSala para as Label
+A classe Conexão não muda.
+A lógica das classes Inserir e Alterar ficam na interface gráfica como métodos dos botões. 
+
+Guardem seus códigos com orgulho no gitbub e avisem seu professor.
+Aproveitem para usar a mesma lógica para construir outros apps e praticar. ;-) 
