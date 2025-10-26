@@ -1,2 +1,3 @@
 Para o banco de dados, considere nome = nome, senha="" e local = localhost;
 Tabela nomes com os valores id com autoincrement e nome como atributo.
+Para funcionar, você vai precisar do drive do mysql. Temos orientações na aula 04.
