@@ -1,0 +1,22 @@
+CONFIGURAÇÃO DO PROJETO COM MAVEN ARCHETYPES 
+	Archetype GroupId: org.apache.maven.archetypes
+	Archetype ArtifactId: maven-archetype-quickstart
+	Version: 1.4
+
+<!--DEPENDÊNCIA DO SPRING (para o pom.xml "Project Object Model") -->
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+        <version>3.3.2</version>
+    </dependency>
+</dependencies>
+
+VERSÃO DO JAVA PARA O PROJETO
+	Trocar "1.7" por "21" em <properties>
+	Rodar "Reload All Maven Projects" para atualizar
+
+DESNECESSARIA A TAG <buld>
+DESNECESSÁRIO A PASTA test dentro do "src/". Fica só o main.
+
+Clicar em Run... E o projeto vai funcionar como antes, mas agora com Maven. 
