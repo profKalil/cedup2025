@@ -11,7 +11,7 @@ public class App extends JFrame {
     private JButton btnInserir, btnAlterar;
     private Conexao conexao;
 
-    public Main () {
+    public App () {
 
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
         conexao = context.getBean(Conexao.class); // Spring injeta a instância
