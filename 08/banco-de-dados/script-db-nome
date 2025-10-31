@@ -1,4 +1,0 @@
-<!-- CRIAÇÃO DA TABELA -->
-
-<!-- CRIAÇÃO DA TABELA -->
-CREATE TABLE `banconovonovo`.`nomes` (`id` INT NULL AUTO_INCREMENT , `nome` VARCHAR(100) NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
