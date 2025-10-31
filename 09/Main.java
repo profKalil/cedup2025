@@ -1,4 +1,4 @@
-// Projeto "projeto153", quinta-feira
+// Aula prática "projeto153", quinta-feira, 30/10
 
 import java.util.Scanner;
 import java.sql.*;
