@@ -1,3 +1,5 @@
+// Aula prática. Projeto APP gerenciador-de-nomes-janela. Quinta-feira, 30/10
+
 import javax.swing.*;
 
 public class Teste extends JFrame {
