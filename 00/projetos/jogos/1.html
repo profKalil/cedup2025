@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Block Blast</title>
+<style>
+  body {
+    margin: 0;
+    background: #1a1a1a;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 { margin: 20px 0; }
+
+  #board {
+    display: grid;
+    grid-template-columns: repeat(10, 30px);
+    grid-template-rows: repeat(10, 30px);
+    gap: 2px;
+    background: #222;
+    padding: 5px;
+    border-radius: 8px;
+  }
+
+  .cell {
+    width: 30px;
+    height: 30px;
+    background: #333;
+    border-radius: 4px;
+  }
+
+  .filled {
+    background: #00bfff;
+  }
+
+  #pieces {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .piece {
+    display: inline-grid;
+    gap: 2px;
+    background: #222;
+    padding: 5px;
+    border-radius: 6px;
+    cursor: grab;
+  }
+
+  .piece div {
+    width: 20px;
+    height: 20px;
+    background: #00bfff;
+  }
+</style>
+</head>
+<body>
+<h1>🧱 Mini Block Blast</h1>
+<div id="board"></div>
+<div id="pieces"></div>
+
+<script>
+const board = document.getElementById('board');
+const piecesDiv = document.getElementById('pieces');
+const size = 10;
+let boardState = Array(size).fill().map(()=>Array(size).fill(0));
+
+function renderBoard() {
+  board.innerHTML = '';
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell' + (boardState[y][x] ? ' filled' : '');
+      board.appendChild(cell);
+    }
+  }
+}
+
+const pieceShapes = [
+  [[1,1,1]],
+  [[1],[1],[1]],
+  [[1,1],[1,1]],
+  [[1,1,1,1]],
+  [[1,1,0],[0,1,1]]
+];
+
+function randomPieces() {
+  piecesDiv.innerHTML = '';
+  for (let i=0;i<3;i++){
+    const shape = pieceShapes[Math.floor(Math.random()*pieceShapes.length)];
+    const piece = document.createElement('div');
+    piece.className = 'piece';
+    piece.style.gridTemplateColumns = `repeat(${shape[0].length}, 20px)`;
+    shape.forEach(row=>{
+      row.forEach(c=>{
+        const d = document.createElement('div');
+        if(c) d.classList.add('filled');
+        piece.appendChild(d);
+      });
+    });
+    piece.draggable = true;
+    piece.dataset.shape = JSON.stringify(shape);
+    piece.addEventListener('dragstart', e=>{
+      e.dataTransfer.setData('shape', piece.dataset.shape);
+    });
+    piecesDiv.appendChild(piece);
+  }
+}
+
+board.addEventListener('dragover', e => e.preventDefault());
+board.addEventListener('drop', e=>{
+  const rect = board.getBoundingClientRect();
+  const cellX = Math.floor((e.clientX - rect.left) / 32);
+  const cellY = Math.floor((e.clientY - rect.top) / 32);
+  const shape = JSON.parse(e.dataTransfer.getData('shape'));
+
+  if (canPlace(shape, cellX, cellY)) {
+    place(shape, cellX, cellY);
+    clearLines();
+    randomPieces();
+    renderBoard();
+  }
+});
+
+function canPlace(shape, x, y) {
+  for (let i=0;i<shape.length;i++){
+    for (let j=0;j<shape[i].length;j++){
+      if(shape[i][j]){
+        if(x+j<0 || y+i<0 || x+j>=size || y+i>=size || boardState[y+i][x+j])
+          return false;
+      }
+    }
+  }
+  return true;
+}
+
+function place(shape, x, y){
+  for (let i=0;i<shape.length;i++){
+    for (let j=0;j<shape[i].length;j++){
+      if(shape[i][j]) boardState[y+i][x+j] = 1;
+    }
+  }
+}
+
+function clearLines(){
+  boardState = boardState.filter(row=>!row.every(c=>c));
+  while(boardState.length<size) boardState.unshift(Array(size).fill(0));
+
+  for(let x=0;x<size;x++){
+    if(boardState.every(r=>r[x])){
+      for(let y=0;y<size;y++) boardState[y][x]=0;
+    }
+  }
+}
+
+randomPieces();
+renderBoard();
+</script>
+</body>
+</html>
