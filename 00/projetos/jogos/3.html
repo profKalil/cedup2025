@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jogo da Cobrinha</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: "Segoe UI", sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    #game-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    #game-board {
+      background-color: #222;
+      border: 3px solid #0f0;
+    }
+
+    #score {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+
+    #game-over {
+      color: #f44;
+      font-size: 1.5em;
+      display: none;
+      margin-top: 10px;
+    }
+
+    #restart-btn {
+      background-color: #0f0;
+      color: #111;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 15px;
+      font-size: 1em;
+      cursor: pointer;
+      display: none;
+      border-radius: 5px;
+    }
+
+    #restart-btn:hover {
+      background-color: #1f1;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐍 Jogo da Cobrinha</h1>
+  <div id="game-container">
+    <canvas id="game-board" width="400" height="400"></canvas>
+  </div>
+  <div id="score">Pontuação: <span id="score-value">0</span></div>
+  <div id="game-over">💀 Fim de jogo!</div>
+  <button id="restart-btn">Reiniciar</button>
+
+  <script>
+    const canvas = document.getElementById("game-board");
+    const ctx = canvas.getContext("2d");
+    const scoreEl = document.getElementById("score-value");
+    const gameOverEl = document.getElementById("game-over");
+    const restartBtn = document.getElementById("restart-btn");
+
+    const box = 20; // tamanho de cada célula
+    const canvasSize = 400;
+    let snake, food, direction, score, gameLoop;
+
+    function iniciarJogo() {
+      snake = [{ x: 200, y: 200 }];
+      direction = "RIGHT";
+      score = 0;
+      food = gerarComida();
+      scoreEl.textContent = score;
+      gameOverEl.style.display = "none";
+      restartBtn.style.display = "none";
+
+      clearInterval(gameLoop);
+      gameLoop = setInterval(atualizarJogo, 120);
+    }
+
+    function gerarComida() {
+      return {
+        x: Math.floor(Math.random() * (canvasSize / box)) * box,
+        y: Math.floor(Math.random() * (canvasSize / box)) * box,
+      };
+    }
+
+    function desenharCobra() {
+      ctx.fillStyle = "#0f0";
+      snake.forEach((parte, i) => {
+        ctx.fillStyle = i === 0 ? "#7f0" : "#0f0";
+        ctx.fillRect(parte.x, parte.y, box, box);
+      });
+    }
+
+    function desenharComida() {
+      ctx.fillStyle = "#f00";
+      ctx.fillRect(food.x, food.y, box, box);
+    }
+
+    function atualizarJogo() {
+      const head = { ...snake[0] };
+
+      // Atualiza direção
+      if (direction === "LEFT") head.x -= box;
+      if (direction === "UP") head.y -= box;
+      if (direction === "RIGHT") head.x += box;
+      if (direction === "DOWN") head.y += box;
+
+      // Verifica colisões com paredes
+      if (
+        head.x < 0 ||
+        head.y < 0 ||
+        head.x >= canvasSize ||
+        head.y >= canvasSize ||
+        colisaoComCorpo(head)
+      ) {
+        fimDeJogo();
+        return;
+      }
+
+      snake.unshift(head); // adiciona nova cabeça
+
+      // Verifica se comeu comida
+      if (head.x === food.x && head.y === food.y) {
+        score++;
+        scoreEl.textContent = score;
+        food = gerarComida();
+      } else {
+        snake.pop(); // remove a cauda
+      }
+
+      // Redesenha o jogo
+      ctx.clearRect(0, 0, canvasSize, canvasSize);
+      desenharComida();
+      desenharCobra();
+    }
+
+    function colisaoComCorpo(head) {
+      return snake.some((parte, index) => index !== 0 && parte.x === head.x && parte.y === head.y);
+    }
+
+    function fimDeJogo() {
+      clearInterval(gameLoop);
+      gameOverEl.style.display = "block";
+      restartBtn.style.display = "inline-block";
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
+      if (e.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
+      if (e.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
+      if (e.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+    });
+
+    restartBtn.addEventListener("click", iniciarJogo);
+
+    // Inicia o jogo ao carregar
+    iniciarJogo();
+  </script>
+</body>
+</html>
