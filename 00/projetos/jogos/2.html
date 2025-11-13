@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jogo de Vestir a Menina Morena</title>
+<style>
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #ffe0f0, #ffc8f0);
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #333;
+}
+
+h1 {
+  margin: 20px;
+  color: #b3006b;
+  text-shadow: 1px 1px #fff;
+}
+
+#game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#character {
+  position: relative;
+  width: 250px;
+  height: 450px;
+  margin: 10px;
+}
+
+img.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+
+.section {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.section h2 {
+  font-size: 18px;
+  color: #b3006b;
+  margin-bottom: 8px;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.option {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  border: 2px solid #fff;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+  transition: 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.option:hover {
+  transform: scale(1.1);
+  border-color: #ff1493;
+}
+
+button {
+  background: #ff69b4;
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-bottom: 20px;
+}
+
+button:hover {
+  background: #ff1493;
+}
+</style>
+</head>
+<body>
+
+<h1>👗 Jogo de Vestir a Menina Morena 👑</h1>
+
+<div id="game">
+  <div id="character">
+    <!-- Boneca morena base -->
+    <img id="skin" class="layer" src="https://i.imgur.com/V7V1bT4.png" alt="boneca morena">
+    <img id="hair" class="layer" src="https://i.imgur.com/XW9cr9m.png" alt="cabelo">
+    <img id="dress" class="layer" src="https://i.imgur.com/cADvUyo.png" alt="roupa">
+    <img id="makeup" class="layer" src="https://i.imgur.com/x0y0hOc.png" alt="maquiagem">
+  </div>
+
+  <div class="section">
+    <h2>💇‍♀️ Cabelos</h2>
+    <div class="options" id="hair-options"></div>
+  </div>
+
+  <div class="section">
+    <h2>👗 Roupas</h2>
+    <div class="options" id="dress-options"></div>
+  </div>
+
+  <div class="section">
+    <h2>💄 Maquiagem</h2>
+    <div class="options" id="makeup-options"></div>
+  </div>
+
+  <button onclick="randomize()">✨ Escolher Aleatório</button>
+</div>
+
+<script>
+// opções de imagens (você pode substituir pelos seus arquivos PNG)
+const hairOptions = [
+  "https://i.imgur.com/XW9cr9m.png",
+  "https://i.imgur.com/52r9vCh.png",
+  "https://i.imgur.com/1Iu8ixW.png",
+  "https://i.imgur.com/gzvBB7z.png"
+];
+
+const dressOptions = [
+  "https://i.imgur.com/cADvUyo.png",
+  "https://i.imgur.com/Hbt5ok7.png",
+  "https://i.imgur.com/0UvJ8VJ.png",
+  "https://i.imgur.com/66PH3sC.png"
+];
+
+const makeupOptions = [
+  "https://i.imgur.com/x0y0hOc.png",
+  "https://i.imgur.com/cMLkxEO.png",
+  "https://i.imgur.com/9cWXUFD.png",
+  "https://i.imgur.com/qg70SBr.png"
+];
+
+// Funções de mudança
+function createOptions(containerId, optionsArray, changeFunction) {
+  const container = document.getElementById(containerId);
+  optionsArray.forEach((url) => {
+    const opt = document.createElement("div");
+    opt.classList.add("option");
+    opt.style.backgroundImage = `url(${url})`;
+    opt.onclick = () => changeFunction(url);
+    container.appendChild(opt);
+  });
+}
+
+function changeHair(url) {
+  document.getElementById("hair").src = url;
+}
+function changeDress(url) {
+  document.getElementById("dress").src = url;
+}
+function changeMakeup(url) {
+  document.getElementById("makeup").src = url;
+}
+
+function randomize() {
+  changeHair(hairOptions[Math.floor(Math.random() * hairOptions.length)]);
+  changeDress(dressOptions[Math.floor(Math.random() * dressOptions.length)]);
+  changeMakeup(makeupOptions[Math.floor(Math.random() * makeupOptions.length)]);
+}
+
+createOptions("hair-options", hairOptions, changeHair);
+createOptions("dress-options", dressOptions, changeDress);
+createOptions("makeup-options", makeupOptions, changeMakeup);
+</script>
+
+</body>
+</html>
